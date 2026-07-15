@@ -102,7 +102,15 @@
     .cards{ grid-template-columns:1fr; }
     .foot{ position:static; margin-top:20px; left:auto; right:auto; }
   }
+  /* 完了バー */
+  .donebar{ position:sticky; bottom:0; margin:10px auto 0; max-width:210mm; background:rgba(255,255,255,.97); border-top:1px solid var(--hair-strong); padding:14px 16px; border-radius:12px 12px 0 0; box-shadow:0 -6px 20px rgba(15,30,45,.14); }
+  .donebar-inner{ display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  .donebar-lead{ font-size:13px; color:var(--ink-soft); font-weight:700; }
+  .sendstatus{ margin:8px 0 0; font-size:13px; font-weight:700; }
+  .sendstatus.ok{ color:#2e7d4f; }
+  .sendstatus.err{ color:#c0392b; }
   @media print{
+    .donebar{ display:none; }
     @page{ size:A4; margin:0; }
     body{ background:#fff; padding:0; }
     .guide{ display:none !important; }
@@ -119,11 +127,11 @@
   <h3>この案内は、この画面で直接編集できます 🖊️</h3>
   <ol>
     <li>点線の枠（オレンジ）を<b>クリックして入力</b>してください。会社概要・施工実績・強みなどを埋められます。</li>
-    <li>入力し終えたら「<b>印刷／PDF保存</b>」→ 送信先で「PDFに保存」を選べば、そのまま提出用ファイルになります。</li>
+    <li>入力が終わったら、ページ下の「<b>入力を完了して森澤に送信</b>」ボタンを押してください。内容が森澤に届きます（「印刷／PDF保存」で控えも残せます）。</li>
     <li>入力すると<b>自動でこの端末に保存</b>されます。同じ端末・ブラウザでこのページを開けば、いつでも続きから入力できます。</li>
   </ol>
   <div class="btns">
-    <button class="btn primary" onclick="window.print()">印刷 ／ PDF保存</button>
+    <button class="btn ghost" onclick="window.print()">印刷 ／ PDF保存（控え）</button>
     <span class="saved" id="savedmsg">✓ 入力は自動で保存されます</span>
   </div>
 </div>
@@ -202,6 +210,14 @@
   <div class="foot"><span>有限会社 中村工務店　会社案内</span><span>2 / 2</span></div>
 </section>
 
+<div class="donebar">
+  <div class="donebar-inner">
+    <span class="donebar-lead">入力が終わったら押してください →</span>
+    <button class="btn primary" id="sendbtn" onclick="__submit()">入力を完了して森澤に送信</button>
+  </div>
+  <p class="sendstatus" id="sendstatus" role="status"></p>
+</div>
+
 <script>
   (function(){
     var KEY = "nakamura_koumuten_profile_v1";
@@ -224,6 +240,18 @@
     fields.forEach(function(f){
       f.addEventListener('input', function(){ clearTimeout(t); t=setTimeout(save, 500); });
     });
+    var ENDPOINT="https://script.google.com/macros/s/AKfycbySHJ52fP5x555RZ_VYqC6O79om6jxAv814By5cI-VzXvQfTQDgCimnalg-Qq2xIpYT/exec";
+    window.__submit=function(){
+      var btn=document.getElementById('sendbtn'), st=document.getElementById('sendstatus');
+      var answers=fields.map(function(f){ return {label:(f.getAttribute('data-ph')||''), value:(f.innerText||'').trim()}; }).filter(function(a){ return a.value; });
+      if(!answers.length){ if(st){ st.textContent='まだ入力が空のようです。点線の欄を埋めてから送信してください。'; st.className='sendstatus err'; } return; }
+      var payload={client:'中村工務店 会社案内', submittedAt:new Date().toISOString(), answers:answers};
+      if(st){ st.textContent=''; st.className='sendstatus'; }
+      if(btn){ btn.disabled=true; btn.textContent='送信中…'; }
+      fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})
+        .then(function(){ if(st){ st.textContent='✓ 送信しました。森澤に届きました。ありがとうございました。'; st.className='sendstatus ok'; } if(btn){ btn.textContent='送信しました ✓'; } })
+        .catch(function(){ if(st){ st.textContent='送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。'; st.className='sendstatus err'; } if(btn){ btn.disabled=false; btn.textContent='入力を完了して森澤に送信'; } });
+    };
   })();
 </script>
 </body>
