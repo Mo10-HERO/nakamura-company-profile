@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>有限会社 中村工務店 会社案内</title>
+<style>
+  :root{
+    --chrome-bg:#e9edf1; --chrome-fg:#20303f; --chrome-muted:#5d7082;
+    --ink:#1b2a3a; --ink-soft:#425468; --hair:#d5dde5; --hair-strong:#b9c4cf;
+    --amber:#b06e28; --amber-soft:#c9944a; --paper:#ffffff; --panel:#f5f2ec;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --chrome-bg:#12171d; --chrome-fg:#e7edf3; --chrome-muted:#93a2b2; }
+  }
+  :root[data-theme="dark"]{ --chrome-bg:#12171d; --chrome-fg:#e7edf3; --chrome-muted:#93a2b2; }
+  :root[data-theme="light"]{ --chrome-bg:#e9edf1; --chrome-fg:#20303f; --chrome-muted:#5d7082; }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--chrome-bg); color:var(--chrome-fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased; padding:22px 16px 64px;
+  }
+
+  /* ---- guide / toolbar (screen only) ---- */
+  .guide{ max-width:210mm; margin:0 auto 16px; background:var(--paper); color:var(--ink);
+    border:1px solid var(--hair-strong); border-left:4px solid var(--amber); border-radius:8px; padding:16px 18px; }
+  .guide h3{ margin:0 0 8px; font-size:15px; }
+  .guide ol{ margin:0; padding-left:20px; font-size:13.5px; line-height:1.75; color:var(--ink-soft); }
+  .guide .btns{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
+  .btn{ border:1px solid var(--hair-strong); cursor:pointer; font:600 13.5px/1 inherit; padding:11px 18px; border-radius:7px; letter-spacing:.02em; }
+  .btn.primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn.primary:hover{ background:#25384b; }
+  .btn.ghost{ background:transparent; color:var(--ink); }
+  .btn.ghost:hover{ background:#f0eee9; }
+  .btn:focus-visible{ outline:3px solid var(--amber-soft); outline-offset:2px; }
+  .saved{ font-size:12.5px; color:#2e7d4f; align-self:center; }
+
+  .sheet{
+    width:210mm; min-height:297mm; margin:0 auto 26px; background:var(--paper); color:var(--ink);
+    padding:18mm 17mm 15mm; box-shadow:0 10px 34px rgba(15,30,45,.20); position:relative;
+  }
+
+  .eyebrow{ font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--amber); font-weight:700; margin:0 0 10px; }
+  .masthead{ display:flex; align-items:flex-end; justify-content:space-between; gap:20px; border-bottom:2.5px solid var(--ink); padding-bottom:14px; }
+  .masthead h1{ font-size:34px; line-height:1.12; margin:0; letter-spacing:.01em; font-weight:800; text-wrap:balance; }
+  .masthead .romaji{ margin:7px 0 0; font-size:12.5px; letter-spacing:.22em; color:var(--ink-soft); text-transform:uppercase; }
+  .locchip{ flex:none; text-align:right; font-size:12px; color:var(--ink-soft); line-height:1.6; }
+  .locchip .k{ display:inline-block; margin-top:6px; padding:5px 11px; border:1px solid var(--hair-strong); border-radius:999px; font-weight:700; color:var(--ink); letter-spacing:.04em; }
+
+  .lead{ margin:22px 0 6px; padding:16px 20px; background:var(--panel); border-left:4px solid var(--amber);
+    font-size:16px; line-height:1.85; color:var(--ink); }
+
+  h2.sec{ font-size:15px; letter-spacing:.14em; margin:30px 0 14px; padding-bottom:8px; font-weight:800; color:var(--ink);
+    border-bottom:1px solid var(--hair); display:flex; align-items:center; gap:10px; }
+  h2.sec::before{ content:""; width:9px; height:9px; background:var(--amber); transform:rotate(45deg); flex:none; }
+
+  dl.profile{ margin:0; display:grid; grid-template-columns:118px 1fr; font-size:14px; }
+  dl.profile dt, dl.profile dd{ margin:0; padding:11px 4px; border-bottom:1px solid var(--hair); line-height:1.6; }
+  dl.profile dt{ font-weight:700; color:var(--ink); }
+  dl.profile dd{ color:var(--ink-soft); }
+  dl.profile dd.strong{ color:var(--ink); font-weight:700; }
+
+  .biz{ font-size:14px; line-height:1.9; color:var(--ink-soft); margin:0 0 10px; }
+  ul.biz-list{ margin:8px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+  ul.biz-list li{ font-size:13.5px; color:var(--ink-soft); padding-left:18px; position:relative; }
+  ul.biz-list li::before{ content:""; position:absolute; left:2px; top:9px; width:7px; height:7px; border:1.5px solid var(--amber); border-radius:50%; }
+
+  table.works{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.works th{ background:var(--ink); color:#fff; font-weight:700; text-align:left; padding:9px 12px; letter-spacing:.05em; font-size:12.5px; }
+  table.works td{ padding:9px 12px; border-bottom:1px solid var(--hair); color:var(--ink-soft); vertical-align:top; }
+  table.works tr td:first-child{ font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink); font-weight:600; }
+
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .card{ border:1px solid var(--hair); border-top:3px solid var(--amber); padding:14px 14px 16px; }
+  .card .n{ font-size:12px; color:var(--amber); font-weight:800; letter-spacing:.1em; }
+  .card .b{ margin-top:8px; font-size:13.5px; line-height:1.7; color:var(--ink-soft); }
+
+  .region{ font-size:14px; line-height:1.9; color:var(--ink-soft); margin:0; }
+
+  .contact{ margin-top:30px; background:var(--ink); color:#fff; padding:20px 24px; display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .contact .name{ font-size:19px; font-weight:800; letter-spacing:.02em; }
+  .contact .rows{ font-size:13px; line-height:1.85; color:#cdd8e2; text-align:right; }
+  .contact .rows b{ color:#fff; }
+
+  .foot{ position:absolute; left:17mm; right:17mm; bottom:9mm; display:flex; justify-content:space-between;
+    font-size:10.5px; color:#9aa7b3; letter-spacing:.05em; border-top:1px solid var(--hair); padding-top:7px; }
+
+  /* ---- editable fields ---- */
+  .edit{ outline:none; color:var(--ink); border-radius:3px; }
+  .edit.inline{ display:inline-block; min-width:90px; border-bottom:1.6px dashed var(--amber-soft); padding:0 5px; }
+  .edit.block{ display:block; min-height:1.4em; border:1.6px dashed var(--amber-soft); border-radius:6px; padding:6px 9px; }
+  .edit:empty::before{ content:attr(data-ph); color:#b6a78f; font-weight:400; }
+  .edit:focus{ background:#fff7ec; box-shadow:0 0 0 2px var(--amber-soft); }
+  td .edit.inline{ border-bottom:1.6px dashed #d8cbb3; min-width:40px; width:100%; }
+
+  @media (max-width:640px){
+    .sheet{ width:100%; padding:24px 18px; min-height:0; }
+    .masthead{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .masthead h1{ font-size:26px; }
+    .cards{ grid-template-columns:1fr; }
+    .foot{ position:static; margin-top:20px; left:auto; right:auto; }
+  }
+  @media print{
+    @page{ size:A4; margin:0; }
+    body{ background:#fff; padding:0; }
+    .guide{ display:none !important; }
+    .sheet{ box-shadow:none; margin:0; width:auto; min-height:297mm; page-break-after:always; }
+    .sheet:last-child{ page-break-after:auto; }
+    .edit{ border:none !important; background:none !important; box-shadow:none !important; padding:0 !important; }
+    .edit:empty::before{ content:"" !important; }   /* 空欄は印刷では非表示 */
+  }
+</style>
+</head>
+<body>
+<!-- ===== guide (screen only) ===== -->
+<div class="guide">
+  <h3>この案内は、この画面で直接編集できます 🖊️</h3>
+  <ol>
+    <li>点線の枠（オレンジ）を<b>クリックして入力</b>してください。会社概要・施工実績・強みなどを埋められます。</li>
+    <li>入力し終えたら「<b>印刷／PDF保存</b>」→ 送信先で「PDFに保存」を選べば、そのまま提出用ファイルになります。</li>
+    <li>途中でやめる場合は「<b>入力内容を端末に保存</b>」で保存したファイルを、後日ブラウザで開けば続きから編集できます。</li>
+  </ol>
+  <div class="btns">
+    <button class="btn primary" onclick="window.print()">印刷 ／ PDF保存</button>
+    <button class="btn ghost" onclick="saveHTML()">入力内容を端末に保存</button>
+    <span class="saved" id="savedmsg" hidden>保存しました ✓</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 1 ============ -->
+<section class="sheet">
+  <p class="eyebrow">Company Profile ・ 会社案内</p>
+  <div class="masthead">
+    <div>
+      <h1>有限会社 中村工務店</h1>
+      <p class="romaji">Nakamura Koumuten Co., Ltd.</p>
+    </div>
+    <div class="locchip">創業以来、地域とともに。<span class="k">広島県 呉市</span></div>
+  </div>
+
+  <p class="lead"><span class="edit block" contenteditable="true" data-ph="キャッチコピー／会社の想いを入力（例：地域とともに、暮らしを支える建設を。）"></span></p>
+
+  <h2 class="sec">会社概要</h2>
+  <dl class="profile">
+    <dt>会社名</dt><dd class="strong">有限会社 中村工務店</dd>
+    <dt>代表者</dt><dd>中村 大介</dd>
+    <dt>所在地</dt><dd>〒737-0046　広島県呉市光町8-13</dd>
+    <dt>電話</dt><dd>0823-23-4461</dd>
+    <dt>事業内容</dt><dd>建設工事一式　<span class="edit inline" contenteditable="true" data-ph="得意分野（新築・リフォーム 等）"></span></dd>
+    <dt>資本金</dt><dd><span class="edit inline" contenteditable="true" data-ph="例：300万円"></span></dd>
+    <dt>従業員数</dt><dd>4名</dd>
+    <dt>創業・設立</dt><dd><span class="edit inline" contenteditable="true" data-ph="創業年（西暦／和暦）"></span></dd>
+    <dt>建設業許可</dt><dd><span class="edit inline" contenteditable="true" data-ph="許可番号（例：広島県知事許可（般-○）第○○○○号）"></span></dd>
+    <dt>有資格者</dt><dd><span class="edit inline" contenteditable="true" data-ph="建築士・施工管理技士 等"></span></dd>
+  </dl>
+
+  <h2 class="sec">事業内容</h2>
+  <p class="biz">建設工事一式を手がけ、地域の住まいと暮らしを支えています。</p>
+  <ul class="biz-list">
+    <li><b>主な工事種別</b>　<span class="edit inline" contenteditable="true" data-ph="新築住宅／リフォーム／店舗／公共工事 など"></span></li>
+    <li><b>対応エリア</b>　<span class="edit inline" contenteditable="true" data-ph="呉市および周辺 など"></span></li>
+  </ul>
+
+  <div class="foot"><span>有限会社 中村工務店　会社案内</span><span>1 / 2</span></div>
+</section>
+
+<!-- ============ PAGE 2 ============ -->
+<section class="sheet">
+  <h2 class="sec">主な施工実績</h2>
+  <p class="biz" style="margin-bottom:12px">代表的な施工事例を、分かる範囲で3〜5件ご記入ください。</p>
+  <table class="works">
+    <thead><tr><th style="width:20%">年度</th><th style="width:52%">工事名・内容</th><th style="width:28%">所在地 / 種別</th></tr></thead>
+    <tbody>
+      <tr><td><span class="edit inline" contenteditable="true" data-ph="令和6"></span></td><td><span class="edit inline" contenteditable="true" data-ph="工事名・内容"></span></td><td><span class="edit inline" contenteditable="true" data-ph="呉市○○町・木造2階 等"></span></td></tr>
+      <tr><td><span class="edit inline" contenteditable="true" data-ph="令和5"></span></td><td><span class="edit inline" contenteditable="true" data-ph="工事名・内容"></span></td><td><span class="edit inline" contenteditable="true" data-ph="所在地／種別"></span></td></tr>
+      <tr><td><span class="edit inline" contenteditable="true" data-ph="令和5"></span></td><td><span class="edit inline" contenteditable="true" data-ph="工事名・内容"></span></td><td><span class="edit inline" contenteditable="true" data-ph="所在地／種別"></span></td></tr>
+      <tr><td><span class="edit inline" contenteditable="true" data-ph="令和4"></span></td><td><span class="edit inline" contenteditable="true" data-ph="工事名・内容"></span></td><td><span class="edit inline" contenteditable="true" data-ph="所在地／種別"></span></td></tr>
+      <tr><td><span class="edit inline" contenteditable="true" data-ph="令和4"></span></td><td><span class="edit inline" contenteditable="true" data-ph="工事名・内容"></span></td><td><span class="edit inline" contenteditable="true" data-ph="所在地／種別"></span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sec">私たちの強み</h2>
+  <div class="cards">
+    <div class="card"><div class="n">01</div><div class="b"><span class="edit block" contenteditable="true" data-ph="強み①（例：地域密着で小回りが利く）"></span></div></div>
+    <div class="card"><div class="n">02</div><div class="b"><span class="edit block" contenteditable="true" data-ph="強み②（例：自社施工で一貫対応）"></span></div></div>
+    <div class="card"><div class="n">03</div><div class="b"><span class="edit block" contenteditable="true" data-ph="強み③（例：創業以来の信頼と実績）"></span></div></div>
+  </div>
+
+  <h2 class="sec">地域への取り組み</h2>
+  <p class="region">三条商店街エリアの空き家を自社施工でリノベーションし、シェアキッチン・レンタルスペースを備えた多世代交流拠点づくりに取り組んでいます（令和8年10月開設予定）。地域のシニア・主婦の「作る・売る・教える」を後押しし、まちのにぎわいづくりに貢献します。</p>
+
+  <div class="contact">
+    <div class="name">有限会社 中村工務店</div>
+    <div class="rows">
+      〒737-0046　広島県呉市光町8-13<br>
+      TEL：<b>0823-23-4461</b><br>
+      担当：東 恵（あずま めぐみ）／ azuma0000@icloud.com
+    </div>
+  </div>
+
+  <div class="foot"><span>有限会社 中村工務店　会社案内</span><span>2 / 2</span></div>
+</section>
+
+<script>
+  function saveHTML(){
+    try{
+      if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      var html = '<!doctype html>\n<html lang="ja">\n' + document.documentElement.innerHTML + '\n</html>';
+      var blob = new Blob([html], {type:'text/html;charset=utf-8'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = '会社案内_中村工務店.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+      var m = document.getElementById('savedmsg'); if(m){ m.hidden=false; setTimeout(function(){ m.hidden=true; }, 4000); }
+    }catch(e){
+      alert('保存がブロックされました。お手数ですが、ブラウザのメニューから「ページを保存」してください。');
+    }
+  }
+</script>
+</body>
+</html>
