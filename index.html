@@ -240,7 +240,7 @@
     fields.forEach(function(f){
       f.addEventListener('input', function(){ clearTimeout(t); t=setTimeout(save, 500); });
     });
-    var ENDPOINT="https://script.google.com/macros/s/AKfycbySHJ52fP5x555RZ_VYqC6O79om6jxAv814By5cI-VzXvQfTQDgCimnalg-Qq2xIpYT/exec";
+    var ENDPOINT="https://script.google.com/macros/s/AKfycbxmtpFtYFIjgLkORoBP3IbSl-2yQxcNbNToo2C4ZhMvSBnh-3FI81IRyQ0yFwPqcI7b/exec";
     window.__submit=function(){
       var btn=document.getElementById('sendbtn'), st=document.getElementById('sendstatus');
       var answers=fields.map(function(f){ return {label:(f.getAttribute('data-ph')||''), value:(f.innerText||'').trim()}; }).filter(function(a){ return a.value; });
