@@ -120,12 +120,11 @@
   <ol>
     <li>点線の枠（オレンジ）を<b>クリックして入力</b>してください。会社概要・施工実績・強みなどを埋められます。</li>
     <li>入力し終えたら「<b>印刷／PDF保存</b>」→ 送信先で「PDFに保存」を選べば、そのまま提出用ファイルになります。</li>
-    <li>入力すると<b>自動でこの端末に保存</b>されます。同じ端末・ブラウザでこのページを開けば、いつでも続きから入力できます（「保存」ボタンでも手動保存できます）。</li>
+    <li>入力すると<b>自動でこの端末に保存</b>されます。同じ端末・ブラウザでこのページを開けば、いつでも続きから入力できます。</li>
   </ol>
   <div class="btns">
     <button class="btn primary" onclick="window.print()">印刷 ／ PDF保存</button>
-    <button class="btn ghost" onclick="__save()">入力内容を保存</button>
-    <span class="saved" id="savedmsg" hidden>保存しました ✓</span>
+    <span class="saved" id="savedmsg">✓ 入力は自動で保存されます</span>
   </div>
 </div>
 
@@ -212,18 +211,19 @@
       var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
       fields.forEach(function(f,i){ if(saved[i]!=null) f.innerHTML = saved[i]; });
     }catch(e){}
-    function save(showMsg){
+    var DEFAULT_MSG = "✓ 入力は自動で保存されます";
+    function save(){
       try{
         var data={}; fields.forEach(function(f,i){ data[i]=f.innerHTML; });
         localStorage.setItem(KEY, JSON.stringify(data));
-        if(showMsg){ var m=document.getElementById('savedmsg'); if(m){ m.hidden=false; setTimeout(function(){ m.hidden=true; },3000); } }
+        var m=document.getElementById('savedmsg');
+        if(m){ m.textContent="保存しました ✓"; clearTimeout(m._t); m._t=setTimeout(function(){ m.textContent=DEFAULT_MSG; },1800); }
       }catch(e){}
     }
     var t;
     fields.forEach(function(f){
-      f.addEventListener('input', function(){ clearTimeout(t); t=setTimeout(function(){ save(false); }, 500); });
+      f.addEventListener('input', function(){ clearTimeout(t); t=setTimeout(save, 500); });
     });
-    window.__save = function(){ save(true); };  // 手動「保存」ボタン用
   })();
 </script>
 </body>
